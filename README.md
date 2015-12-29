@@ -86,6 +86,10 @@ with open(filename+'/metadata.json', 'w', encoding='utf-8') as outfile:
 ```
 The parsed Netstream file can get quite large. Keep that in mind when trying to view it in your preferred editor.
 
+# License
+This Project is published under GNU GPL v3.0
+It would also be nice if you drop me a notice (Mail or Github) if you made something publicly available using this package.
+
 # Credits and Sources
 Existing Parsers which this is partly based on https://github.com/danielsamuels/rocket-league-replays/wiki/Rocket-League-Replay-Parsers
 
