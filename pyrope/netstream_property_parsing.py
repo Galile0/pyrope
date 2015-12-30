@@ -168,14 +168,16 @@ def _read_rigid_body_state(bitstream):
 
 def _read_unique_id(bitstream):
     system = _read_byte(bitstream)
-    if system == 1:  # STEAM
+    if system == 0:  # Splitscreen
+        uid = reverse_bytewise(bitstream.read('bits:24')).uintle
+    elif system == 1:  # STEAM
         uid = reverse_bytewise(bitstream.read('bits:64')).uintle
     elif system == 2:  # PS4
         uid = reverse_bytewise(bitstream.read('bits:256')).hex
-    else:  # ayyy
-        uid = reverse_bytewise(bitstream.read('bits:24')).hex
-    playernumber = _read_byte(bitstream)
-    return system, uid, playernumber
+    else:
+        raise PropertyParsingError('Unknown System ID')
+    splitscreen_id = _read_byte(bitstream)
+    return system, uid, splitscreen_id
 
 
 def _read_cam_settings(bitstream):

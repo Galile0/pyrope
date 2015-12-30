@@ -18,7 +18,8 @@ class Frame:
         self.current = reverse_bytewise(netstream.read('bits:32')).floatle
         self.delta = reverse_bytewise(netstream.read('bits:32')).floatle
         if self.current < 0.001 or self.delta < 0.001:
-            raise FrameParsingError("Last Frame caused some offset")
+            raise FrameParsingError("Last Frame caused some offset. Nextbits: %s"
+                                    % netstream.read('bits:64').hex)
         self.actors = self._parse_actors(netstream, objects, propertymapper)
 
     def _parse_actors(self, netstream, objects, propertymapper):
