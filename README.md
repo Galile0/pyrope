@@ -25,6 +25,7 @@ replay.parse_netstream()
 Depending on the size of your Replay file the parse_netstream() will take some time (For full fledged matches roughly one minute)
 Therefor parse_netstream() offers you two objects for commincation while running threaded. These are *qout* for getting progress updates and *ev* as an Event Flag to interrupt the parsing Process. Example for threaded parsing:
 ```python
+import time
 from threading import Thread, Event
 from queue import Queue
 
