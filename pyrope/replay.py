@@ -233,7 +233,8 @@ class Replay:
         if remaining.int != 0:
             msg = "There seems to be meaningful data left in the Netstream: %s" % remaining.hex
             raise EOFError(msg)
-        qout.put('done')
+        if qout:
+            qout.put('done')
         return frames
 
     def __getstate__(self):
