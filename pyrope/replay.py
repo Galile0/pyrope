@@ -250,7 +250,7 @@ class Replay:
     def __setstate__(self, d):
         self.__dict__.update(d)
 
-    def netstream_to_json(self, skip_empty=True):
+    def netstream_to_json(self, skip_empty=True, indent=None):
         def nonempty(framedict):
             frames = OrderedDict()
             for k, v in framedict:
@@ -260,10 +260,10 @@ class Replay:
         if skip_empty:
             return json.dumps(self,
                               default=lambda o: nonempty(self.netstream.items()),
-                              indent=2)
+                              indent=indent)
         return json.dumps(self,
                           default=lambda o: {k: v.__dict__ for k, v in self.netstream.items()},
-                          indent=2)
+                          indent=indent)
 
     def metadata_to_json(self):
         d = OrderedDict([('CRC', self.crc),
