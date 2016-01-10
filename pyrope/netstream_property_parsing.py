@@ -110,7 +110,8 @@ parsing = {
     "ProjectX.GRI_X:Reservations": lambda x: _read_reservations(x),
     "TAGame.VehiclePickup_TA:ReplicatedPickupData": lambda x: _read_pickup(x),
     "TAGame.Car_TA:ReplicatedDemolish": lambda x: _read_demolish(x),
-    "TAGame.GameEvent_Soccar_TA:ReplicatedMusicStinger": lambda x: _read_musicstinger(x)
+    "TAGame.GameEvent_Soccar_TA:ReplicatedMusicStinger": lambda x: _read_musicstinger(x),
+    "TAGame.GameEvent_SoccarPrivate_TA:MatchSettings": lambda x: _read_private_settings(x)
 }
 
 
@@ -265,3 +266,13 @@ def _read_musicstinger(bitstream):
     soundcue = _read_int(bitstream)
     trigger = _read_byte(bitstream)
     return soundcue, trigger
+
+
+def _read_private_settings(bitstream):
+    mutators = _read_string(bitstream).split(',')
+    unknown_1 = _read_int(bitstream)
+    unknown_2 = _read_int(bitstream)
+    name = _read_string(bitstream)
+    password = _read_string(bitstream)
+    flag = _read_bool(bitstream)
+    return mutators, unknown_1, unknown_2, name, password, flag
