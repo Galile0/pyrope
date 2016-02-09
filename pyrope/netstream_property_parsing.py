@@ -94,6 +94,7 @@ parsing = {
     "Engine.GameReplicationInfo:ServerName": lambda x: _read_string(x),
     "Engine.PlayerReplicationInfo:PlayerName": lambda x: _read_string(x),
     "TAGame.Team_TA:CustomTeamName": lambda x: _read_string(x),
+    "TAGame.GRI_TA:NewDedicatedServerIP": lambda x: _read_string(x),
 
     # S.P.E.C.I.A.L
     "TAGame.RBActor_TA:ReplicatedRBState": lambda x: _read_rigid_body_state(x),
