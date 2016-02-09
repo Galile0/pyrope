@@ -12,7 +12,12 @@ def read_string(bitstream):  # TODO OPTIONAL: CHECK IF PROPERLY NULL TERMINATED
     if string_len < 0:
         string_len *= -2
         return bitstream.read('bytes:'+str(string_len))[:-2].decode('utf-16')
-    return bitstream.read('bytes:'+str(string_len))[:-1].decode('utf-8')
+    stream_bytes = bitstream.read('bytes:'+str(string_len))[:-1]
+
+    try:
+        return stream_bytes.decode('utf-8')
+    except UnicodeDecodeError:
+        return stream_bytes.decode('latin-1')
 
 
 def reverse_bytewise(bitstream, dbg=False):

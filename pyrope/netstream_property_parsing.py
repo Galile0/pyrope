@@ -151,7 +151,13 @@ def _read_string(bitstream):  # This should be in utils. But its only needed her
     if length < 0:
         length *= -2
         return reverse_bytewise(bitstream.read('bits:'+str(length))).bytes[:-2].decode('utf-16')
-    return reverse_bytewise(bitstream.read('bits:'+str(length))).bytes[:-1].decode('utf-8')
+
+    reversed_bytes = reverse_bytewise(bitstream.read('bits:'+str(length))).bytes[:-1]
+
+    try:
+        return reversed_bytes.decode('utf-8')
+    except UnicodeDecodeError:
+        return reversed_bytes.decode('latin-1')
 
 
 def _read_rigid_body_state(bitstream):
