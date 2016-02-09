@@ -47,19 +47,19 @@ class Frame:
                 continue
 
             new = netstream.read(BOOL)
-            if new:
-                type_name, data = self._parse_new_actor(netstream, objects)
-                self._actor_alive[actorid] = type_name
-            else:
-                try:
+            try:
+                if new:
+                    type_name, data = self._parse_new_actor(netstream, objects)
+                    self._actor_alive[actorid] = type_name
+                else:
                     data = self._parse_existing_actor(netstream,
                                                       self._actor_alive[actorid],
                                                       objects, propertymapper)
-                except PropertyParsingError as e:
-                    e.args += ({'CurrFrameActors': actors},
-                               {'ErrorActorType': self._actor_alive[actorid],
-                                'ErrorActorId': actorid})
-                    raise e
+            except (PropertyParsingError, KeyError) as e:
+                e.args += ({'CurrFrameActors': actors},
+                           {'ErrorActorType': self._actor_alive[actorid],
+                            'ErrorActorId': actorid})
+                raise e
             if new:
                 shorttype = str(actorid) + 'n' + '_'
                 shorttype += self._actor_alive[actorid].split('.')[-1].split(':')[-1]
