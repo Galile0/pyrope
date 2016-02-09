@@ -178,6 +178,10 @@ def _read_unique_id(bitstream):
     system = _read_byte(bitstream)
     if system == 0:  # Splitscreen
         uid = reverse_bytewise(bitstream.read('bits:24')).uintle
+        print(uid)
+        if uid > 1:
+            bitstream.pos -= 24
+            return -1, -1, -1
     elif system == 1:  # STEAM
         uid = reverse_bytewise(bitstream.read('bits:64')).uintle
     elif system == 2:  # PS4
