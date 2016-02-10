@@ -77,6 +77,7 @@ parsing = {
     "TAGame.PRI_TA:bIsInSplitScreen": lambda x: _read_bool(x),
     "Engine.GameReplicationInfo:bMatchIsOver": lambda x: _read_bool(x),
     "TAGame.CarComponent_Boost_TA:bUnlimitedBoost": lambda x: _read_bool(x),
+    "Engine.PlayerReplicationInfo:bIsSpectator": lambda x: _read_bool(x),
 
     # FLOAT Properties
     "TAGame.CarComponent_FlipCar_TA:FlipCarTime": lambda x: _read_float(x),

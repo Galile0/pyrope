@@ -59,9 +59,9 @@ def read_serialized_vector(bitstream):
     numbits = read_serialized_int(bitstream)
     bias = 1 << (numbits+1)
     max_bits = numbits + 2
-    dx = reverse_bytewise(bitstream.read(max_bits)).intle
-    dy = reverse_bytewise(bitstream.read(max_bits)).intle
-    dz = reverse_bytewise(bitstream.read(max_bits)).intle
+    dx = reverse_bytewise(bitstream.read(max_bits)).uintle
+    dy = reverse_bytewise(bitstream.read(max_bits)).uintle
+    dz = reverse_bytewise(bitstream.read(max_bits)).uintle
     x = dx-bias
     y = dy-bias
     z = dz-bias
