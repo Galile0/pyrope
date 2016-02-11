@@ -51,6 +51,7 @@ parsing = {
     "TAGame.GameEvent_Soccar_TA:ReplicatedScoredOnTeam": lambda x: _read_byte(x),
     "TAGame.GameEvent_TA:ReplicatedStateIndex": lambda x: _read_byte(x),  # maybe?
     "TAGame.CarComponent_TA:ReplicatedActive": lambda x: _read_byte(x),
+    "TAGame.CarComponent_Boost_TA:ReplicatedBoostAmount": lambda x: _read_byte(x),
 
     # BOOLEAN Properties
     "Engine.Actor:bCollideWorld": lambda x: _read_bool(x),
@@ -78,6 +79,7 @@ parsing = {
     "Engine.GameReplicationInfo:bMatchIsOver": lambda x: _read_bool(x),
     "TAGame.CarComponent_Boost_TA:bUnlimitedBoost": lambda x: _read_bool(x),
     "Engine.PlayerReplicationInfo:bIsSpectator": lambda x: _read_bool(x),
+    "TAGame.GameEvent_Soccar_TA:bBallHasBeenHit": lambda x: _read_bool(x),
 
     # FLOAT Properties
     "TAGame.CarComponent_FlipCar_TA:FlipCarTime": lambda x: _read_float(x),
@@ -103,6 +105,7 @@ parsing = {
     "TAGame.PRI_TA:PartyLeader": lambda x: _read_unique_id(x),
     "TAGame.PRI_TA:CameraSettings": lambda x: _read_cam_settings(x),
     "TAGame.PRI_TA:ClientLoadout": lambda x: _read_loadout(x),
+    "TAGame.PRI_TA:ClientLoadoutOnline": lambda x: _read_loadout_online(x),
     "TAGame.Car_TA:TeamPaint": lambda x: _read_teampaint(x),
     "TAGame.Ball_TA:ReplicatedExplosionData": lambda x: _read_explosion(x),
     "Engine.Actor:Role": lambda x: _read_enum(x),
@@ -207,8 +210,15 @@ def _read_cam_settings(bitstream):
 def _read_loadout(bitstream):
     # Loadout has no Paint information, could be Car, Decal?, Wheels, Boost, Hat, Antenna, Title
     index = _read_byte(bitstream)
-    values = [_read_int(bitstream) for i in range(7)]
+    values = [_read_int(bitstream) for i in range(6)]
+    unknown = _read_int(bitstream)
+    if index > 10:
+        values.append(_read_int(bitstream))
     return index, values
+
+
+def _read_loadout_online(bitstream):
+    return _read_int(bitstream), _read_int(bitstream), _read_int(bitstream)
 
 
 def _read_teampaint(bitstream):
