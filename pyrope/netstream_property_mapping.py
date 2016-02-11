@@ -34,7 +34,7 @@ class PropertyMapper:
             classname = 'TAGame.GRI_TA'
         elif archname == 'Archetypes.GameEvent.GameEvent_Season:CarArchetype':
             classname = 'TAGame.Car_Season_TA'
-        elif archname == 'Archetypes.Ball.CubeBall':
+        elif archname == 'Archetypes.Ball.CubeBall' or archname == 'Archetypes.Ball.Ball_Puck':
             classname = 'TAGame.Ball_TA'
         else:
             classname = re.sub('_\d+', '', archname).split('.')[-1].split(':')[-1]

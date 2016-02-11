@@ -56,10 +56,13 @@ class Frame:
                                                       self._actor_alive[actorid],
                                                       objects, propertymapper)
             except (PropertyParsingError, KeyError) as e:
-                e.args += ({'CurrFrameActors': actors},
-                           {'ErrorActorType': self._actor_alive[actorid],
-                            'ErrorActorId': actorid,
-                            'ErrorActorData': data})
+                e.args += ({'CurrFrameActors': actors},)
+                try:
+                    e.args += ({'ErrorActorType': self._actor_alive[actorid],
+                                'ErrorActorId': actorid,
+                                'ErrorActorData': data},)
+                except KeyError:
+                    pass
                 raise e
             if new:
                 shorttype = str(actorid) + 'n' + '_'
@@ -97,6 +100,6 @@ class Frame:
         if 'TheWorld' in type_name:  # World types are Vector Less
             return type_name, actor
         actor['vector'] = read_serialized_vector(netstream)
-        if 'Ball_Default' in type_name or 'Car_Default' in type_name:
+        if 'Archetypes.Ball' in type_name or 'Car_Default' in type_name:
             actor['rotation'] = read_byte_vector(netstream)
         return type_name, actor
