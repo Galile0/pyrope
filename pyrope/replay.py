@@ -161,9 +161,14 @@ class Replay:
         cachelist.reverse()  # Build netcache tree by "furling" our netcaches from behind
         for index, item in enumerate(cachelist[:-1]):  # Worst case should be O(n^2)
             next_cache_index = index + 1
+            parent = list(item.values())[0]['parent']
             while True:  # iterate until we found a cache with our parent id
+                if next_cache_index == len(cachelist): # Hit root without finding parent
+                    parent -= 1  # Lets try one ID lower for the parent
+                    next_cache_index = index + 1  # reset search to first item
+                    continue
                 nextitem = list(cachelist[next_cache_index].values())[0]
-                if nextitem['cache_id'] == list(item.values())[0]['parent']:
+                if nextitem['cache_id'] == parent:
                     nextitem.update(item)  # Parent found, add our element to it
                     break  # On to the next cache
                 else:

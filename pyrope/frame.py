@@ -58,7 +58,8 @@ class Frame:
             except (PropertyParsingError, KeyError) as e:
                 e.args += ({'CurrFrameActors': actors},
                            {'ErrorActorType': self._actor_alive[actorid],
-                            'ErrorActorId': actorid})
+                            'ErrorActorId': actorid,
+                            'ErrorActorData': data})
                 raise e
             if new:
                 shorttype = str(actorid) + 'n' + '_'
