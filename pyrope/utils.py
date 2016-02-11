@@ -7,21 +7,21 @@ FLOAT_BE_32 = 'floatbe:32'
 BOOL = 'bool'
 
 
-def read_string(bitstream):  # TODO OPTIONAL: CHECK IF PROPERLY NULL TERMINATED
+def read_string(bitstream):
     string_len = bitstream.read('intle:32')
     if string_len < 0:
         string_len *= -2
         return bitstream.read('bytes:'+str(string_len))[:-2].decode('utf-16')
-    stream_bytes = bitstream.read('bytes:'+str(string_len))[:-1]
-
+    stream_bytes = bitstream.read('bytes:'+str(string_len))
+    string = stream_bytes[:-1]
+    assert stream_bytes[-1] == 0, 'String not Zero terminated'
     try:
-        return stream_bytes.decode('utf-8')
+        return string.decode('utf-8')
     except UnicodeDecodeError:
-        return stream_bytes.decode('latin-1')
+        return string.decode('latin-1')
 
 
 def reverse_bytewise(bitstream, dbg=False):
-    # start = time()
     result = []
     if dbg:
         print(bitstream.bin)
@@ -30,8 +30,6 @@ def reverse_bytewise(bitstream, dbg=False):
             print(hex(byte))
         result.append(reverse_byte(byte))
     reverse_bytes = bitstring.ConstBitStream(bytes=result)
-    # delta = time() - start
-    # print('method three took', delta)
     return reverse_bytes
 
 
@@ -50,7 +48,6 @@ def read_serialized_int(bitstream, max_val=19):
         bit = bitstream.read(BOOL)
         if bit:
             value += (1 << i)
-        # print(bin(value))
         i += 1
     return value
 

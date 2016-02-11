@@ -182,7 +182,6 @@ def _read_unique_id(bitstream):
     system = _read_byte(bitstream)
     if system == 0:  # Splitscreen
         uid = reverse_bytewise(bitstream.read('bits:24')).uintle
-        print(uid)
         if uid > 1:
             bitstream.pos -= 24
             return -1, -1, -1
@@ -235,9 +234,7 @@ def _read_pickup(bitstream):
     # Seems quirky but yields good results... let it rest for now son
     instigator = _read_bool(bitstream)
     if instigator:
-        # print("instigator present")
         return _read_int(bitstream), _read_bool(bitstream)  # InstigatorId + picked up
-    # print("no instigator?")
     return _read_bool(bitstream)  # Only picked up
 
 

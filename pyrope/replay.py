@@ -163,7 +163,7 @@ class Replay:
             next_cache_index = index + 1
             parent = list(item.values())[0]['parent']
             while True:  # iterate until we found a cache with our parent id
-                if next_cache_index == len(cachelist): # Hit root without finding parent
+                if next_cache_index == len(cachelist):  # Hit root without finding parent
                     parent -= 1  # Lets try one ID lower for the parent
                     next_cache_index = index + 1  # reset search to first item
                     continue
